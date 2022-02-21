@@ -8,10 +8,12 @@ let equelColor = "rgb(205,205,255)"
 
 let values = ["C", "input", 7, 8, 9, "+", 4, 5, 6, "-", 1, 2, 3, "/", 0, ",", "=", "x"];
 let div;
+let historyDiv;
 
 let btnArray = [];
 
 let calcArray = [''];
+let historyArray = [];
 
 /************************/
 /*         CODE         */
@@ -47,6 +49,17 @@ function createHTML(){
     div.className = "calcDiv";
     div.addEventListener("click", btnClicked);
     document.body.appendChild(div);
+
+    historyDiv = document.createElement("div");
+    historyDiv.style.width = "15%";
+    historyDiv.style.heigth = "20%";
+    historyDiv.style.backgroundColor = "tomato";
+    historyDiv.style.margin = "0 auto";
+    historyDiv.style.marginTop = "5%";
+    historyDiv.style.borderRadius = "0.5rem";
+    historyDiv.className = "calcDiv";
+    historyDiv.addEventListener("click", btnClicked);
+    document.body.appendChild(historyDiv);
 
     for(let i = 0; i < values.length; i++){
 
@@ -112,6 +125,8 @@ function btnClicked(e){
 
             calcArray.push(parseFloat(btnArray[1].value));
             calcArray.push("+");
+            historyArray.push(btnArray[1].value)
+            historyArray.push("+");
             btnArray[1].value = "";
 
         }
@@ -120,6 +135,8 @@ function btnClicked(e){
 
             calcArray.push(parseFloat(btnArray[1].value));
             calcArray.push("-");
+            historyArray.push(btnArray[1].value)
+            historyArray.push("-");
             btnArray[1].value = "";
 
         }
@@ -128,6 +145,8 @@ function btnClicked(e){
 
             calcArray.push(parseFloat(btnArray[1].value));
             calcArray.push("*");
+            historyArray.push(btnArray[1].value)
+            historyArray.push("*");
             btnArray[1].value = "";
 
         }
@@ -136,6 +155,8 @@ function btnClicked(e){
 
             calcArray.push(parseFloat(btnArray[1].value));
             calcArray.push("/");
+            historyArray.push(btnArray[1].value)
+            historyArray.push("/");
             btnArray[1].value = "";
 
         }
@@ -146,11 +167,16 @@ function btnClicked(e){
 
         if(e.target.value === ","){
             btnArray[1].value += ".";
+            historyArray.push(".");
         }
 
         if(e.target.value == "="){
 
             calcArray.push(parseFloat(btnArray[1].value));
+            
+            historyArray.push(btnArray[1].value)
+            historyArray.push("=");
+
             btnArray[1].value = "";
 
             for(let i = 1; i < calcArray.length; i++){
@@ -184,10 +210,27 @@ function btnClicked(e){
             }
 
             btnArray[1].value = calcArray[calcArray.length-1]
+            
+            historyArray.push(btnArray[1].value)
+
+            createHistory();
+
+            historyArray = [];
+
             calcArray = [''];
 
         }
 
     }
+
+}
+
+
+function createHistory(){
+
+    let p = document.createElement("p");
+    p.innerHTML = historyArray.join("");
+    historyDiv.appendChild(p);
+
 
 }
