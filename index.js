@@ -35,7 +35,7 @@ function createHTML(){
     document.body.appendChild(headline);
 
     div = document.createElement("div");
-    div.style.width = "25%";
+    div.style.width = "fit-content";
     div.style.heigth = "45%";
     div.style.display = "grid";
     div.style.backgroundColor = "gray";
