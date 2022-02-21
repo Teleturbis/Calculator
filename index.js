@@ -230,6 +230,7 @@ function createHistory(){
 
     let p = document.createElement("p");
     p.innerHTML = historyArray.join("");
+    p.style.padding = "1rem";
     historyDiv.appendChild(p);
 
 
